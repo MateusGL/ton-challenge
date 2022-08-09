@@ -4,11 +4,19 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "auditHigh": "npm audit --registry https://registry.npmjs.org --audit-level=high",
+        "auditCritical": "npm audit --registry https://registry.npmjs.org --audit-level=critical",
         "test": "echo \"Error: no test specified\" && exit 1",
         "watch": "tsc -w",
         "lint": "tslint '*.ts'",
         "build": "tsc"
     },
+    "pre-commit": [
+        "auditHigh",
+        "auditCritical",
+        "lint",
+        "test"
+    ],
     "keywords": [],
     "author": "",
     "license": "ISC",
