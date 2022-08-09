@@ -28,3 +28,20 @@ or you can deploy in your aws account with
 ```
 serverless deploy --stage dev
 ```
+
+# Routes
+## add visit to web site counter
+POST /count
+## get visits of the web site 
+GET /count
+## create a user 
+POST /users
+<br>body: 
+```
+{
+    "name": "ana",
+    "email": "ana@gmail.com"
+}
+```
+## get user info
+GET /users?id=hash
