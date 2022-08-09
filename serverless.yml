@@ -1,0 +1,70 @@
+service: ton-challenge
+frameworkVersion: '3'
+
+custom:
+  tableName: 'ton-challenge-users-table-${sls:stage}'
+
+provider:
+  name: aws
+  runtime: nodejs14.x  
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - Fn::GetAtt: [ TonChallengeUsersTable, Arn ]
+  environment:
+    USERS_TABLE: ${self:custom.tableName}    
+  httpApi:
+    cors: true  
+
+resources:
+  Resources:
+    TonChallengeUsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH          
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:custom.tableName}
+
+functions:
+  count:
+    handler: functions/countAPI/count.handler
+    events:
+      - httpApi:
+          path: /count
+          method: post
+  getAccess:
+    handler: functions/countAPI/access.handler
+    events:
+      - httpApi:
+          path: /count
+          method: get
+  create:
+    handler: functions/users/create.handler
+    events:
+      - httpApi:
+          path: /users
+          method: post
+  get:
+    handler: functions/users/get.handler
+    events:
+      - httpApi:
+          path: /users
+          method: get
+          response:
+            headers:
+                Content-Type: "'application/json+hal'"
+
