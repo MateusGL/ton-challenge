@@ -1,22 +1,26 @@
 {
     "name": "ton-challenge",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "watch": "tsc -w",
-        "lint": "tslint '*.ts'"
+        "lint": "tslint '*.ts'",
+        "build": "tsc"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@types/aws-sdk": "0.0.42",
-        "@types/node": "^7.0.5",
+        "@types/aws-sdk": "^2.7.0",
+        "@types/node": "^18.6.5",
         "tslint": "^5.5.0",
-        "tslint-config-standard": "^6.0.1",
-        "typescript": "^2.4.2"
+        "tslint-config-standard": "^9.0.0",
+        "typescript": "^4.7.4"
     },
-    "dependencies": {}
+    "dependencies": {
+        "countapi-js": "^1.0.2",
+        "uuid": "^8.3.2"
+    }
 }
